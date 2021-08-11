@@ -29,8 +29,11 @@ jobs:
         uses: actions/setup-node@v1.4.4
         with:
           # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
-          node-version: 14.x
+          node-version: 14.17.4
       - run: echo building WyliodrinSTUDIO-${{ github.event.inputs.version }}.${{ matrix.extension }}
+      - name: Installing Linux dependencies
+        run: sudo apt-get install build-essential libudev-dev
+        if: matrix.os == 'ubuntu-latest'
       - run: npm install
       - run: npx electron-rebuild
       - run: npm run dist
